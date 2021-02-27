@@ -1,2 +1,8 @@
 /.pytest_cache
 tests/__pycache__
+tests/.pytest_cache
+tests/pytestbook
+tests/drivers
+
+tests/test_sample.py
+tests/test_selenium.py

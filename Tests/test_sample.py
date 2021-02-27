@@ -1,5 +1,13 @@
-def func(x):
-    return x + 1
+import pytest
 
-def test_answer():
-    assert func(3) == 4
+@pytest.fixture()
+def my_fixture():
+    print("\nfixture SetUp")
+    yield
+    print("\nfixture TearDown")
+
+def test_first(my_fixture):
+    print("test 1")
+
+def test_second(my_fixture):
+    print("test 2")
