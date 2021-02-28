@@ -1,0 +1,45 @@
+1.  Manufacturers dropdown
+    css: $$("li.manufacturers")
+    xpath: $x("//li[contains(@class, 'manufacturers')]")
+
+2.  Sign in dropdown
+    css: $$("li.account")
+    xpath: $x("//li[contains(@class, 'account')]")
+
+3.  Second item in the 'Recently viewed' section
+    css: $$("#box-recently-viewed-products div.products div:nth-child(2)")
+    xpath: $x("//section[@id='box-recently-viewed-products']//div[2]")
+
+4.  If the image of the second duck in the 'Popular products' section is needed:
+    css: $$("section#box-popular-products div.listing article:nth-child(2) a div.image-wrapper img")
+    xpath: $x("//section[@id='box-popular-products']//div[contains(@class, 'listing')]//article[2]//div[contains(@class, 'image-wrapper')]//img")
+
+    If the green duck image in the 'Popular products' section is needed:
+    css: $$("section#box-popular-products div.listing article a[title='Green Duck'] div.image-wrapper img")
+    xpath: $x("//section[@id='box-popular-products']//div[contains(@class, 'listing')]//a[@title='Green Duck']/..")
+
+5.  Discount price
+    css: $$("section#box-latest-products div.listing article:nth-child(1) a div strong")
+    xpath: $x("//section[@id='box-latest-products']//div[contains(@class, 'listing')]//article[1]//a//div//strong")
+
+6.  If the third duck in the 'Latest products' section is needed:
+    css: $$("section#box-latest-products div.listing article:nth-child(3)")
+    xpath: $x("//section[@id='box-latest-products']//div[contains(@class, 'listing')]//article[3]")
+
+    If the red duck in the 'Latest products' section is needed:
+    css: ??
+    xpath: $x("//section[@id='box-latest-products']//div[contains(@class, 'listing')]//a[@title='Red Duck']/..")
+
+7. 'Email address' field
+    css: $$("input[name='email']")
+    xpath: $x("//input[@name='email']")
+
+8. 'Password' field
+    css: $$("input[name='password']")
+    xpath: $x("//input[@name='password']")
+
+9. 'New customers' link
+    css: $$("li.account ul li:nth-child(2) a")
+    xpath: $x("//li[contains(@class, 'account')]//ul//li[2]//a")
+
+
