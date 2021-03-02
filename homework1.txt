@@ -26,9 +26,9 @@
     css: $$("section#box-latest-products div.listing article:nth-child(3)")
     xpath: $x("//section[@id='box-latest-products']//div[contains(@class, 'listing')]//article[3]")
 
-    If the red duck in the 'Latest products' section is needed:
-    css: ??
-    xpath: $x("//section[@id='box-latest-products']//div[contains(@class, 'listing')]//a[@title='Red Duck']/..")
+    If the red duck card in the 'Latest products' section is needed:
+    css: $$("section#box-latest-products a[title='Red Duck']")
+    xpath: $x("//section[@id='box-latest-products']//div[contains(@class, 'listing')]//a[@title='Red Duck']")
 
 7. 'Email address' field
     css: $$("input[name='email']")
