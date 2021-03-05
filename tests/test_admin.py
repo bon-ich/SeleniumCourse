@@ -1,4 +1,5 @@
 import pytest
+import time
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
@@ -13,37 +14,26 @@ class TestAdmin:
     admin_password = "R8MRDAYT_test"
     
     def login(self):
-        username_field = self.driver.find_element(By.NAME, "username")
-        username_field.send_keys(self.admin_username)
-
-        password_field = self.driver.find_element(By.NAME, "password")
-        password_field.send_keys(self.admin_password)
-
-        login_button = self.driver.find_element(By.CSS_SELECTOR, "button[name=login]")
-        login_button.click()
-    
-    def has_submenus(self, menu_item):
-        """ Check if menu item has submenus """
-        try:
-            menu_item.find_element(By.CSS_SELECTOR, ".docs")    
-            return True    
-        except NoSuchElementException:
-            return False
-    
+        # fill username field
+        self.driver.find_element(By.NAME, "username").send_keys(self.admin_username)
+        # fill password field
+        self.driver.find_element(By.NAME, "password").send_keys(self.admin_password)
+        # click login button
+        self.driver.find_element(By.CSS_SELECTOR, "button[name=login]").click()
+        
     def get_submenus(self, menu_item):
         """ Get submenu items """
         ul = menu_item.find_element(By.CSS_SELECTOR, ".docs") 
         li = ul.find_elements(By.CSS_SELECTOR, "li.doc")
-        return li          
-     
-    def is_page_header_presented(self):
-        """ Check if page header is displayed """
+        return li        
+    
+    def is_element_present(self, element_locator):
         try:
-            self.driver.find_element(By.CSS_SELECTOR, "div.panel-heading")
+            self.driver.find_element(*element_locator)
             return True
         except NoSuchElementException:
             return False
-    
+         
     def test_page_header(self):
         self.driver.implicitly_wait(5)
         self.driver.get(self.admin_url)
@@ -51,25 +41,29 @@ class TestAdmin:
         self.login()
         
         # wait until the sidebar is displayed
-        WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_element_located((By.ID, "sidebar")))
+        WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_element_located((By.ID, "sidebar")))        
 
         menu_items = self.driver.find_elements(By.CSS_SELECTOR, "ul#box-apps-menu li.app")
         
+        # wait to be sure that submenus are ready
+        time.sleep(1)
+        
         for i in range(len(menu_items)):
-            
             menu_items[i].click()
                         
             # update list to not to get stale element exception
             menu_items = self.driver.find_elements(By.CSS_SELECTOR, "ul#box-apps-menu li.app")
 
-            if(self.has_submenus(menu_items[i])):
+            if(self.is_element_present((By.CSS_SELECTOR, "ul.docs"))):
                 submenus = self.get_submenus(menu_items[i])
                 for j in range(len(submenus)):
                     submenus[j].click()
                                         
+                    assert self.is_element_present((By.CSS_SELECTOR, "div.panel-heading")) == True
+                    
                     # update lists to not to get stale element exception
                     menu_items = self.driver.find_elements(By.CSS_SELECTOR, "ul#box-apps-menu li.app")
                     submenus = self.get_submenus(menu_items[i])
             
             # check that page header is displayed
-            assert self.is_page_header_presented() == True
+            assert self.is_element_present((By.CSS_SELECTOR, "div.panel-heading")) == True
