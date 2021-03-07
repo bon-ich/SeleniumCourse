@@ -1,6 +1,8 @@
 /.pytest_cache
 /.vscode
 
+/venv
+
 tests/__pycache__
 tests/.pytest_cache
 tests/pytestbook
