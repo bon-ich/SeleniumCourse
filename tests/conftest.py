@@ -10,3 +10,10 @@ def setup(request):
 
     yield driver
     driver.close()
+    
+@pytest.fixture
+def login():
+    username = ""
+    password = ""
+    
+    # do steps to login

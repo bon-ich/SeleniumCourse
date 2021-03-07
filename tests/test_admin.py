@@ -35,7 +35,7 @@ class TestAdmin:
             return False
          
     def test_page_header(self):
-        self.driver.implicitly_wait(5)
+        self.driver.implicitly_wait(3)
         self.driver.get(self.admin_url)
         
         self.login()
