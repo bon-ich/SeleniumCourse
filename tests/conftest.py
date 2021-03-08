@@ -5,7 +5,11 @@ from selenium import webdriver
 @pytest.fixture(scope="class")
 def setup(request):
     print("initiating chrome driver")
-    driver = webdriver.Chrome()
+
+    options = webdriver.ChromeOptions()
+    options.add_argument("--start-maximized")
+
+    driver = webdriver.Chrome(options=options)
     request.cls.driver = driver
 
     yield driver
