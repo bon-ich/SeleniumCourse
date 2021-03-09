@@ -16,6 +16,7 @@ class TestCart:
     url = "http://158.101.173.161/"
     
     def add_random_item_to_cart(self, expected_count):
+        """Add random item from 'Popular products' section to cart"""
         popular_products_selector = (By.CSS_SELECTOR, "section#box-popular-products div.listing article")
         add_cart_button_selector = (By.NAME, "add_cart_product")
         cart_quantity_badge_selector = (By.CSS_SELECTOR, "div.badge.quantity")        
@@ -26,7 +27,7 @@ class TestCart:
         random_item.click()
 
         # added because button isn't clicked randomly without a small wait
-        # and WebDriverWait until element_to_be_clickable didn't helped 
+        # and WebDriverWait with different conditions (e.g. to_be_clickable) didn't helped 
         time.sleep(0.5)
         
         # add item to cart
@@ -36,6 +37,7 @@ class TestCart:
         WebDriverWait(self.driver, 5).until(expected_conditions.text_to_be_present_in_element(cart_quantity_badge_selector, expected_count))      
 
     def is_element_presented(self, locator):
+        """Check if element is presented on the page"""
         try:
             self.driver.find_element(*locator)
             return True
@@ -81,11 +83,13 @@ class TestCart:
         # add 3 items in the cart
         for i in range(1, 4):                    
             self.add_random_item_to_cart(str(i))
-            # go to the main page
+            # go back to the main page
             self.driver.get(self.url)       
 
+        # open cart
         self.driver.find_element(*cart_link_selector).click()
+        # remove all items
         self.remove_all_items_from_cart()
 
-        # assert if list with items is displayed after all items are removed from the cart
+        # assert if list with items is not displayed after all items are removed from the cart
         assert self.is_element_presented((By.CSS_SELECTOR, "ul.items")) == False
