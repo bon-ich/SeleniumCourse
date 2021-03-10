@@ -4,7 +4,7 @@ import pytest
 import random
 import time
 
-from selenium.webdriver.common.by import By      
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions  
 from selenium.common.exceptions import NoSuchElementException
@@ -46,13 +46,29 @@ class TestWindows:
         # click new country button
         self.driver.find_element(By.XPATH, "//a[text()=' Add New Country']").click()
 
+        # get all links 
         external_links = self.driver.find_elements(*external_link_selector)
-        print(len(external_links))
 
         for link in external_links:
+            # track window with admin site
+            base_window = self.driver.current_window_handle
+            # track number of windows before clicking link
+            windows_count = len(self.driver.window_handles)
+            
             link.click()
-
-        time.sleep(2)
+            # wail till new window opens
+            WebDriverWait(self.driver, 10).until(expected_conditions.number_of_windows_to_be(windows_count + 1))
+            
+            assert len(self.driver.window_handles) > windows_count
+                        
+            # get all opened windows
+            opened_windows = self.driver.window_handles    
+            # switch to the last opened window
+            self.driver.switch_to.window(opened_windows[-1])      
+            # close current window
+            self.driver.close()              
+            # get back to admin site
+            self.driver.switch_to.window(base_window)
 
 
 

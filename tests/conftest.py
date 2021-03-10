@@ -13,7 +13,7 @@ def setup(request):
     request.cls.driver = driver
 
     yield driver
-    driver.close()
+    driver.quit()
     
 @pytest.fixture
 def login():
