@@ -1,6 +1,8 @@
 import random
 import time
 
+from attr import set_run_validators
+
 from .base_page import BasePage
 
 from selenium.webdriver.common.by import By
@@ -12,6 +14,12 @@ class CartPageLocators:
     REMOVE_ITEM_BTN_SELECTOR = (By.NAME, "remove_cart_item")
 
 class CartPage(BasePage):
+    url = "checkout"
+
+    def get(self):
+        self.goto(self.baseurl + self.url)
+        WebDriverWait(self.driver, 5).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "div.cart.wrapper")))
+    
     def remove_all_items_from_cart(self):
         # wait until item are displayed
         WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_element_located(CartPageLocators.ITEMS_LOCATOR))
@@ -39,7 +47,6 @@ class CartPage(BasePage):
         print("all items are removed")
         
     def is_items_list_displayed(self):
-        # return len(self.find_elements((By.CSS_SELECTOR, "ul.items"))) != 0
         try: 
             self.find_element((By.CSS_SELECTOR, "ul.items"))
             return True
