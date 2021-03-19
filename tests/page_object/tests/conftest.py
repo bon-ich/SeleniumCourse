@@ -1,17 +1,15 @@
 import pytest
 from selenium import webdriver
-
-
-@pytest.fixture(scope="class")
-def setup(request):
+    
+    
+@pytest.fixture(scope="session")
+def chrome_driver():
     print("initiating chrome driver")
 
     options = webdriver.ChromeOptions()
     options.add_argument("--start-maximized")
 
     driver = webdriver.Chrome(options=options)
-    request.cls.driver = driver
 
     yield driver
     driver.quit()
-    
