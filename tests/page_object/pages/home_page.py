@@ -1,5 +1,6 @@
 import random
 import time
+import allure
 
 from .base_page import BasePage
 
@@ -14,9 +15,11 @@ class HomePageLocators:
 
 
 class HomePage(BasePage):
+    @allure.step("Get home page")
     def get_page(self):
         self.goto(self.baseurl)
 
+    @allure.step("Open random product from 'Popular' section")
     def open_random_popular_product(self):
         popular_products = self.find_elements(HomePageLocators.POPULAR_PRODUCRS_LOCATOR)
         
@@ -24,6 +27,6 @@ class HomePage(BasePage):
         random_item.click()
         
         time.sleep(0.5)
-        
+    
     def open_cart(self):
         self.find_element(HomePageLocators.CART_LINK_LOCATOR).click()

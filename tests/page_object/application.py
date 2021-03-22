@@ -23,9 +23,6 @@ class Application:
             home_page.get_page()
             
     def empty_cart(self):
-        # home_page = hp.HomePage(self.driver)
-        # print("open cart")
-        # home_page.open_cart()
         cart_page = cp.CartPage(self.driver)
         cart_page.remove_all_items_from_cart()
         

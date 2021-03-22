@@ -1,5 +1,4 @@
-import random
-import time
+import allure
 
 from .base_page import BasePage
 
@@ -12,6 +11,7 @@ class ProductPageLocators:
     CART_QUANTITY_BADGE_LOCATOR = (By.CSS_SELECTOR, "div.badge.quantity")
 
 class ProductPage(BasePage):
+    @allure.step("Add item to cart")
     def add_item_to_cart(self, expected_count):
         # add item to cart
         self.find_element(ProductPageLocators.ADD_CART_BUTTON_LOCATOR).click()        

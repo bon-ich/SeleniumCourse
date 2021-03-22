@@ -7,4 +7,5 @@ pytest_cache
 
 tests/pytestbook
 tests/drivers
+allure_reports
 

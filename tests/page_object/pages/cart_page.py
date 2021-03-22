@@ -1,7 +1,4 @@
-import random
-import time
-
-from attr import set_run_validators
+import allure
 
 from .base_page import BasePage
 
@@ -16,10 +13,12 @@ class CartPageLocators:
 class CartPage(BasePage):
     url = "checkout"
 
+    @allure.step("Get cart page")
     def get(self):
         self.goto(self.baseurl + self.url)
         WebDriverWait(self.driver, 5).until(expected_conditions.presence_of_element_located((By.CSS_SELECTOR, "div.cart.wrapper")))
     
+    @allure.step("Remove all items from cart")
     def remove_all_items_from_cart(self):
         # wait until item are displayed
         WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_element_located(CartPageLocators.ITEMS_LOCATOR))
@@ -46,6 +45,7 @@ class CartPage(BasePage):
 
         print("all items are removed")
         
+    @allure.step("Check if items list is displayed")
     def is_items_list_displayed(self):
         try: 
             self.find_element((By.CSS_SELECTOR, "ul.items"))
